@@ -1,4 +1,4 @@
-import patterns.abstractFactory.client.SimuladorInvestimentos;
+import patterns.abstractFactory.SimuladorRendaFixa;
 import patterns.abstractFactory.model.TipoInvestimento;
 import patterns.adapter.BoletoRegistradoAdapter;
 import patterns.adapter.models.BoletoNaoRegistrado;
@@ -32,9 +32,9 @@ public class Main {
 
     private static void abstractFactory() {
         System.out.println("Abstract Factory ----------------------");
-        SimuladorInvestimentos simuladorInvestimentos = new SimuladorInvestimentos();
-        System.out.println(simuladorInvestimentos.simulaInvestimento(TipoInvestimento.CDB, 720, 1000.0));
-        System.out.println(simuladorInvestimentos.simulaInvestimento(TipoInvestimento.POUPANCA, 720, 1000.0));
+        SimuladorRendaFixa simuladorRendaFixa = new SimuladorRendaFixa();
+        System.out.println(simuladorRendaFixa.simulaInvestimento(TipoInvestimento.CDB, 720, 1000.0));
+        System.out.println(simuladorRendaFixa.simulaInvestimento(TipoInvestimento.POUPANCA, 720, 1000.0));
     }
 
     private static void builder() {
