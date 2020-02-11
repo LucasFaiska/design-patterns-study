@@ -67,4 +67,14 @@ public class AbstractFactoryTest {
     public void testCDB0reais() {
         simuladorRendaFixa.simulaInvestimento(TipoInvestimento.POUPANCA,1080, 0.0);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPoupanca0dias() {
+        simuladorRendaFixa.simulaInvestimento(TipoInvestimento.POUPANCA,0, 100.0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCDB0dias() {
+        simuladorRendaFixa.simulaInvestimento(TipoInvestimento.POUPANCA,0, 100.0);
+    }
 }
