@@ -23,7 +23,5 @@ public class CalculadoraEmprestimo {
         return emprestimo.calcularValorTotal(this.valor, this.totalMeses);
     }
 
-    public class CalculoInvalidoEmprestimoException extends Throwable {
-
-    }
+    public static class CalculoInvalidoEmprestimoException extends Throwable { }
 }

@@ -131,7 +131,6 @@ public class Main {
             System.out.println("Parametros inválidos para calcular empréstimo");
         }
 
-
         calculadoraEmprestimoPessoaFisica.setValor(100);
         calculadoraEmprestimoPessoaFisica.setTotalMeses(12);
         try {
