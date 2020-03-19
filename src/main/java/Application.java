@@ -10,6 +10,7 @@ import patterns.bridge.implementation.PagamentoTransferenciaTed;
 import patterns.bridge.implementation.TransferenciaDoc;
 import patterns.builder.BoletoBuilder;
 import patterns.builder.GeradorBoleto;
+import patterns.decorator.*;
 import patterns.factoryMethod.Cliente;
 import patterns.factoryMethod.ClientePessoaFísica;
 import patterns.factoryMethod.ClientePessoaJuridica;
@@ -18,26 +19,28 @@ import patterns.strategy.CalculadoraEmprestimo;
 import patterns.strategy.EmprestimoPessoaFisica;
 import patterns.strategy.EmprestimoPessoaJuridica;
 
-public class Main {
+public class Application {
 
     public static void main(String[] args) {
-        abstractFactory();
-        builder();
-        factoryMethod();
-        proxy();
-        bridge();
-        adapter();
-        strategy();
+        Application application = new Application();
+        application.abstractFactory();
+        application.builder();
+        application.factoryMethod();
+        application.proxy();
+        application.bridge();
+        application.adapter();
+        application.strategy();
+        application.decorator();
     }
 
-    private static void abstractFactory() {
+    private void abstractFactory() {
         System.out.println("Abstract Factory ----------------------");
         SimuladorRendaFixa simuladorRendaFixa = new SimuladorRendaFixa();
         System.out.println(simuladorRendaFixa.simulaInvestimento(TipoInvestimento.CDB, 720, 1000.0));
         System.out.println(simuladorRendaFixa.simulaInvestimento(TipoInvestimento.POUPANCA, 720, 1000.0));
     }
 
-    private static void builder() {
+    private void builder() {
         System.out.println("Builder ----------------------");
         BoletoBuilder boletoBuilder = new BoletoBuilder();
         GeradorBoleto geradorBoleto = new GeradorBoleto();
@@ -46,7 +49,7 @@ public class Main {
         System.out.println(geradorBoleto.getBoleto());
     }
 
-    private static void factoryMethod() {
+    private void factoryMethod() {
         System.out.println("Factory Method ----------------------");
         Cliente cliente;
         cliente = new ClientePessoaFísica("Lucas", "123456789");
@@ -55,7 +58,7 @@ public class Main {
         System.out.println(cliente.getLimite());
     }
 
-    private static void proxy() {
+    private void proxy() {
         System.out.println("Proxy ----------------------");
         ClienteProxy cliente1 = new ClienteProxy(1);
         ClienteProxy cliente2 = new ClienteProxy(2);
@@ -77,7 +80,7 @@ public class Main {
         System.out.println("Cliente 1: " + cliente1.getNome());
     }
 
-    private static void bridge() {
+    private void bridge() {
         System.out.println("Bridge ----------------------");
         PagamentoTransferencia pagamentoTransferenciaDoc = new PagamentoTransferenciaDoc();
         Transferencia transferenciaDoc = new TransferenciaDoc(pagamentoTransferenciaDoc);
@@ -88,7 +91,7 @@ public class Main {
         transferenciaTed.transferir(150.0);
     }
 
-    private static void adapter() {
+    private void adapter() {
         System.out.println("Adapter ----------------------");
         //Sistema realizava pagamentos de boletos não registrados normalmente
         BoletoNaoRegistrado boletoNaoRegistrado = new BoletoNaoRegistrado();
@@ -101,7 +104,7 @@ public class Main {
         boletoRegistradoAdapter.pagar(100.0);
     }
 
-    private static void strategy() {
+    private void strategy() {
         System.out.println("Strategy ----------------------");
         CalculadoraEmprestimo calculadoraEmprestimoPessoaJuridica = new CalculadoraEmprestimo(new EmprestimoPessoaJuridica());
         CalculadoraEmprestimo calculadoraEmprestimoPessoaFisica = new CalculadoraEmprestimo(new EmprestimoPessoaFisica());
@@ -154,5 +157,16 @@ public class Main {
         } catch (CalculadoraEmprestimo.CalculoInvalidoEmprestimoException e) {
             System.out.println("Parametros inválidos para calcular empréstimo");
         }
+    }
+
+    private void decorator() {
+        QuartoHotel quartoHotel = new ArCondicionadoQuartoHotel(new QuartoHotelBase());
+        System.out.println("A diária de um Quarto com Ar Condicionado custa: " + quartoHotel.calcularPreco());
+
+        quartoHotel = new ArCondicionadoQuartoHotel(new TVCaboQuartoHotel(new QuartoHotelBase()));
+        System.out.println("A diária de um Quarto com Ar Condicionado + TV A Cabo custa: " + quartoHotel.calcularPreco());
+
+        quartoHotel = new ArCondicionadoQuartoHotel(new CamaKingSizeQuartoHotel(new TVCaboQuartoHotel(new QuartoHotelBase())));
+        System.out.println("A diária de um Quarto com Ar Condicionado + TV A Cabo + Cama King Size custa: " + quartoHotel.calcularPreco());
     }
 }
